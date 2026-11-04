@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CODM Legends Hub</title>
+<style>
+:root{--bg:#0a0d0a;--panel:rgba(12,16,12,.82);--text:#eef3ea;--mut:#9aa89a;--acc:#ffb300;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--text);font-family:"Segoe UI",Roboto,Arial,sans-serif;background:
+radial-gradient(circle at 20% 15%,rgba(80,110,60,.35),transparent 40%),radial-gradient(circle at 80% 70%,rgba(120,60,20,.3),transparent 45%),
+repeating-linear-gradient(35deg,#10160f 0 40px,#161d13 40px 80px,#0c110b 80px 120px),var(--bg);background-attachment:fixed}
+.frame{position:fixed;inset:0;border:6px solid;border-image:linear-gradient(90deg,#ff004c,#ff9500,#ffee00,#00ff6a,#00d5ff,#7a5cff,#ff00d4,#ff004c) 1;pointer-events:none;z-index:50;animation:hue 5s linear infinite;box-shadow:inset 0 0 24px rgba(255,255,255,.12)}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;gap:12px;padding:12px 18px;background:rgba(6,9,6,.92);backdrop-filter:blur(8px);border-bottom:1px solid #2b3a2b}
+.burger{background:none;border:1px solid #3a4c3a;border-radius:8px;width:44px;height:40px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 10px;cursor:pointer}
+.burger i{display:block;height:3px;background:var(--acc);border-radius:2px}
+.logo{font-weight:900;letter-spacing:2px;font-size:18px}.logo b{color:var(--acc)}
+.langbar{display:flex;gap:8px;padding:8px 18px;background:rgba(20,28,20,.9);border-bottom:1px solid #2b3a2b;overflow-x:auto;position:relative;z-index:10}
+.langbar button{flex:none;background:#1a241a;color:var(--text);border:1px solid #3a4c3a;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px}
+.langbar button.on{background:var(--acc);color:#111;font-weight:700}
+.drawer{position:fixed;top:0;left:-300px;width:280px;height:100%;background:#070a07;z-index:40;padding:80px 18px 20px;border-right:2px solid var(--acc);transition:left .3s}
+.drawer.open{left:0}
+.drawer button{display:block;width:100%;text-align:left;background:#131b13;color:var(--text);border:1px solid #2f402f;padding:14px;margin-bottom:10px;border-radius:10px;font-size:15px;cursor:pointer}
+.drawer button:hover{border-color:var(--acc);color:var(--acc)}
+main{max-width:1000px;margin:0 auto;padding:22px 18px 60px;position:relative;z-index:5}
+section.view{display:none}section.view.on{display:block}
+.hero{text-align:center;padding:30px 10px;background:var(--panel);border-radius:16px;border:1px solid #2b3a2b;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(28px,7vw,52px);margin:0 0 8px;text-transform:uppercase;letter-spacing:3px;background:linear-gradient(90deg,#ffb300,#ff4d00);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--mut);margin:0 0 16px}
+.hero svg{width:100%;max-width:520px;height:90px;color:var(--acc);opacity:.9}
+h2{margin:30px 0 12px;text-transform:uppercase;letter-spacing:2px;font-size:18px;border-left:4px solid var(--acc);padding-left:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid #2b3a2b;border-radius:12px;padding:12px;text-align:center}
+.card svg{width:100%;height:56px}
+.card h3{margin:6px 0 2px;font-size:14px}.card small{color:var(--mut)}
+.skin{background:linear-gradient(145deg,var(--c1),var(--c2));border:0;color:#fff;text-shadow:0 1px 3px #000}
+.skin small{color:#fff;opacity:.85}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.stat{background:var(--panel);border:1px solid #2b3a2b;border-radius:12px;padding:16px;text-align:center}
+.stat b{display:block;font-size:26px;color:var(--acc)}
+table{width:100%;border-collapse:collapse;background:var(--panel);border-radius:12px;overflow:hidden}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid #223022;font-size:14px}th{color:var(--acc);text-transform:uppercase;font-size:12px}
+.scroll{overflow-x:auto}
+.box{background:var(--panel);border:1px solid #2b3a2b;border-radius:14px;padding:18px;line-height:1.6}
+input,select{background:#0e150e;color:var(--text);border:1px solid #3a4c3a;border-radius:8px;padding:10px;margin:4px 6px 4px 0;font-size:14px}
+.btn{background:var(--acc);color:#111;border:0;border-radius:8px;padding:10px 18px;font-weight:800;cursor:pointer}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;background:#3b2a00;color:var(--acc);font-size:12px}
+footer{text-align:center;color:var(--mut);padding:20px;font-size:12px;position:relative;z-index:5}
+</style></head><body>
+<div class="frame"></div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="ar" viewBox="0 0 200 60"><path fill="currentColor" d="M4 24h40l8-6h60v8h30l10-6h40v10h-14l-6 8h-22l-4 16h-14l2-16H70l-6 20H50l4-20H4z"/></symbol>
+<symbol id="sn" viewBox="0 0 200 60"><path fill="currentColor" d="M2 28h70V18h24v8h50l10-6h40v8l-20 4H96l-10 14H74l4-14H2zM100 12h22v6h-22z"/></symbol>
+<symbol id="smg" viewBox="0 0 200 60"><path fill="currentColor" d="M10 22h90l8-6h50v10h24v8h-30l-4 22h-14l2-22H90l-6 16H70l4-16H10z"/></symbol>
+<symbol id="sg" viewBox="0 0 200 60"><path fill="currentColor" d="M4 26h120l10-6h56v12h-56l-6 4H90l-10 12H66l6-12H4z"/></symbol>
+<symbol id="pi" viewBox="0 0 200 60"><path fill="currentColor" d="M50 14h90v14h-30l-6 24h-20l4-24H50z"/></symbol>
+<symbol id="kn" viewBox="0 0 200 60"><path fill="currentColor" d="M20 36l100-22c30 2 56 8 70 16-30 6-90 10-130 8l-8 10H24z"/></symbol>
+</defs></svg>
+
+<header><button class="burger" id="bg" aria-label="Menu"><i></i><i></i><i></i></button><div class="logo">CODM<b>LEGENDS</b></div></header>
+<nav class="langbar" id="lb"><button class="on" data-l="en">English</button><button data-l="ko">한국어</button><button data-l="de">Deutsch</button><button data-l="fa">فارسی</button></nav>
+
+<aside class="drawer" id="dr">
+<button data-v="home">⌂ Home</button>
+<button data-v="players">★ Legendary Players Panel</button>
+<button data-v="about">ℹ About Legendary Players</button>
+<button data-v="admin">⚙ Management Panel</button>
+</aside>
+
+<main>
+<section class="view on" id="home">
+<div class="hero"><h1 id="t">Rise to Legendary</h1><p id="s">The ultimate hub for Call of Duty: Mobile players. Skins, weapons, ranks and glory.</p>
+<svg viewBox="0 0 200 60"><use href="#ar"/></svg></div>
+<h2>Player Stats</h2>
+<div class="stats"><div class="stat"><b>12.4K</b>Active Players</div><div class="stat"><b>3.1M</b>Matches Tracked</div><div class="stat"><b>98</b>Legendary Ranks</div><div class="stat"><b>24/7</b>Live Tournaments</div></div>
+<h2>Arsenal</h2>
+<div class="grid" id="wg"></div>
+<h2>Legendary Skins</h2>
+<div class="grid" id="sk"></div>
+</section>
+
+<section class="view" id="players">
+<h2>Legendary Players Panel</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Player</th><th>Rank</th><th>K/D</th><th>Main Weapon</th></tr></thead><tbody id="tb"></tbody></table></div>
+</section>
+
+<section class="view" id="about">
+<h2>About Legendary Players</h2>
+<div class="box">Legendary players sit at the very top of Call of Duty: Mobile ranked play. They are known for razor-sharp aim, smart map control, and fearless clutch plays. This hub celebrates them with live rankings, loadout showcases and the rarest operator skins. Whether you grind Ranked, Battle Royale or tournaments, this is where the best of the best are recognised.</div>
+</section>
+
+<section class="view" id="admin">
+<h2>Management Panel</h2>
+<div class="box"><p>Add a player to the Legendary board (changes live only in this session).</p>
+<input id="n" placeholder="Player name"><input id="k" type="number" step="0.1" placeholder="K/D">
+<select id="w"><option>AK-47</option><option>M4</option><option>DL Q33</option><option>Locus</option><option>HS0405</option><option>Kilo Bolt</option></select>
+<button class="btn" id="add">Add Player</button></div>
+</section>
+</main>
+<footer>© CODM Legends Hub · Fan-made site, not affiliated with Activision.</footer>
+
+<script>
+var W=[["AK-47","ar"],["M4","ar"],["DL Q33","sn"],["Locus","sn"],["MP5","smg"],["Fennec","smg"],["HS2126","sg"],["Strikers","sg"],["Desert Eagle","pi"],["Combat Knife","kn"]];
+var S=[["Ghost: Reaper","Legendary","#ff004c","#7a0030"],["Price: Gold Rush","Mythic","#ffb300","#b34a00"],["Soap: Frostbite","Epic","#00d5ff","#005a8a"],["Nikto: Neon","Legendary","#a100ff","#3a0070"],["Zero: Inferno","Mythic","#ff6a00","#7a1500"],["Mara: Venom","Epic","#00e676","#00582a"]];
+var wg=document.getElementById("wg"),sk=document.getElementById("sk"),i;
+W.forEach(function(w){wg.innerHTML+='<div class="card"><svg viewBox="0 0 200 60" style="color:var(--acc)"><use href="#'+w[1]+'"/></svg><h3>'+w[0]+'</h3></div>'});
+S.forEach(function(s,j){sk.innerHTML+='<div class="card skin" style="--c1:'+s[2]+';--c2:'+s[3]+'"><svg viewBox="0 0 200 60"><use href="#'+W[j][1]+'"/></svg><h3>'+s[0]+'</h3><small>'+s[1]+'</small></div>'});
+var P=[["ShadowViper","Legendary I",2.9,"AK-47"],["NovaStrike","Legendary I",2.7,"DL Q33"],["IronWolf","Legendary II",2.5,"M4"],["GhostMamba","Legendary II",2.4,"Locus"],["BlazeKing","Legendary III",2.2,"HS0405"]];
+function draw(){document.getElementById("tb").innerHTML=P.map(function(p,x){return"<tr><td>"+(x+1)+"</td><td>"+p[0]+"</td><td><span class=tag>"+p[1]+"</span></td><td>"+p[2]+"</td><td>"+p[3]+"</td></tr>"}).join("")}draw();
+document.getElementById("add").onclick=function(){var n=document.getElementById("n").value.trim();if(!n)return;P.push([n,"Legendary V",parseFloat(document.getElementById("k").value)||1,document.getElementById("w").value]);P.sort(function(a,b){return b[2]-a[2]});draw();document.getElementById("n").value=""};
+var dr=document.getElementById("dr");
+document.getElementById("bg").onclick=function(){dr.classList.toggle("open")};
+dr.querySelectorAll("button").forEach(function(b){b.onclick=function(){document.querySelectorAll(".view").forEach(function(v){v.classList.remove("on")});document.getElementById(b.dataset.v).classList.add("on");dr.classList.remove("open");scrollTo(0,0)}});
+var L={en:["Rise to Legendary","The ultimate hub for Call of Duty: Mobile players. Skins, weapons, ranks and glory."],ko:["전설로 거듭나라","콜 오브 듀티 모바일 플레이어를 위한 최고의 허브. 스킨, 무기, 랭크, 그리고 영광."],de:["Werde zur Legende","Der ultimative Hub für Call of Duty: Mobile Spieler. Skins, Waffen, Ränge und Ruhm."],fa:["به افسانه تبدیل شو","بهترین مرکز بازیکنان کالاف دیوتی موبایل: اسکین، سلاح، رتبه و افتخار."]};
+document.querySelectorAll("#lb button").forEach(function(b){b.onclick=function(){document.querySelectorAll("#lb button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");var l=L[b.dataset.l];document.getElementById("t").textContent=l[0];document.getElementById("s").textContent=l[1];document.querySelector(".hero").dir=b.dataset.l=="fa"?"rtl":"ltr"}});
+</script></body></html>
