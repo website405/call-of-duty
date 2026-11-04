@@ -9,8 +9,8 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;color:var(--text);font-family:"Segoe UI",Roboto,Tahoma,Arial,sans-serif;background:
 radial-gradient(circle at 20% 15%,var(--g1),transparent 40%),radial-gradient(circle at 80% 70%,var(--g2),transparent 45%),
-repeating-linear-gradient(35deg,var(--c1) 0 40px,var(--c2) 40px 80px,var(--c3) 80px 120px),var(--bg);background-attachment:fixed}
-.frame{position:fixed;inset:0;border:6px solid;border-image:linear-gradient(90deg,#ff004c,#ff9500,#ffee00,#00ff6a,#00d5ff,#7a5cff,#ff00d4,#ff004c) 1;pointer-events:none;z-index:50;animation:hue 5s linear infinite;box-shadow:inset 0 0 24px rgba(255,255,255,.1)}
+repeating-linear-gradient(35deg,var(--c1) 0 40px,var(--c2) 40px 80px,var(--c3) 80px 120px),var(--bg)}
+.frame{position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;border:solid;border-width:6px 6px 0 6px;border-image:linear-gradient(90deg,#ff004c,#ff9500,#ffee00,#00ff6a,#00d5ff,#7a5cff,#ff00d4,#ff004c) 1;pointer-events:none;z-index:50;animation:hue 5s linear infinite;transform:translateZ(0);will-change:filter}
 [data-fr="fire"] .frame{border-image:linear-gradient(90deg,#ff0000,#ff7a00,#ffd000,#ff7a00,#ff0000) 1;animation:none}
 [data-fr="ice"] .frame{border-image:linear-gradient(90deg,#00e5ff,#2979ff,#e0f7ff,#2979ff,#00e5ff) 1;animation:none}
 [data-fr="toxic"] .frame{border-image:linear-gradient(90deg,#39ff14,#b6ff00,#00ff9d,#b6ff00,#39ff14) 1;animation:none}
@@ -184,50 +184,50 @@ footer{text-align:center;color:var(--mut);padding:20px;font-size:12px;position:r
 </header>
 
 <aside class="drawer" id="dr">
-<button data-v="home">⌂ <span data-i="m1">Home</span></button>
-<button data-v="players">★ <span data-i="m2">Legendary Players Panel</span></button>
-<button data-v="about">ℹ <span data-i="m3">About Legendary Players</span></button>
-<button data-v="admin">⚙ <span data-i="m4">Management Panel</span></button>
+<button data-v="home">⌂ <span data-i="m1"></span></button>
+<button data-v="players">★ <span data-i="m2"></span></button>
+<button data-v="about">ℹ <span data-i="m3"></span></button>
+<button data-v="admin">⚙ <span data-i="m4"></span></button>
 </aside>
 
 <main>
 <section class="view on" id="home">
 <div class="hero"><h1 data-i="t">Rise to Legendary</h1><p data-i="s">The ultimate hub for Call of Duty: Mobile players.</p>
 <svg viewBox="0 0 240 80"><use href="#ak"/></svg></div>
-<h2 data-i="hs">Player Stats</h2>
-<div class="stats"><div class="stat"><b>12.4K</b><span data-i="a1">Active Players</span></div><div class="stat"><b>3.1M</b><span data-i="a2">Matches Tracked</span></div><div class="stat"><b>98</b><span data-i="a3">Legendary Ranks</span></div><div class="stat"><b>24/7</b><span data-i="a4">Live Tournaments</span></div></div>
-<h2 data-i="ha">Arsenal</h2>
+<h2 data-i="hs"></h2>
+<div class="stats"><div class="stat"><b>12.4K</b><span data-i="a1"></span></div><div class="stat"><b>3.1M</b><span data-i="a2"></span></div><div class="stat"><b>98</b><span data-i="a3"></span></div><div class="stat"><b>24/7</b><span data-i="a4"></span></div></div>
+<h2 data-i="ha"></h2>
 <div class="grid" id="wg"></div>
-<h2 data-i="hk">Legendary Skins</h2>
+<h2 data-i="hk"></h2>
 <div class="grid" id="sk"></div>
 </section>
 
 <section class="view" id="players">
-<h2 data-i="hp">Legendary Players Panel</h2>
-<div class="scroll"><table><thead><tr><th>#</th><th data-i="c1">Player</th><th data-i="c2">Rank</th><th>K/D</th><th data-i="c4">Main Weapon</th></tr></thead><tbody id="tb"></tbody></table></div>
+<h2 data-i="hp"></h2>
+<div class="scroll"><table><thead><tr><th>#</th><th data-i="c1"></th><th data-i="c2"></th><th>K/D</th><th data-i="c4"></th></tr></thead><tbody id="tb"></tbody></table></div>
 </section>
 
 <section class="view" id="about">
-<h2 data-i="hb">About Legendary Players</h2>
+<h2 data-i="hb"></h2>
 <div class="box" data-i="bt"></div>
 </section>
 
 <section class="view" id="admin">
-<h2 data-i="hm">Management Panel</h2>
-<div class="box"><p data-i="mt">Add a player.</p>
+<h2 data-i="hm"></h2>
+<div class="box"><p data-i="mt"></p>
 <input id="n" placeholder="Player name"><input id="k" type="number" step="0.1" placeholder="K/D">
 <select id="w"><option>AK-47</option><option>M4</option><option>DL Q33</option><option>MP5</option><option>HS2126</option><option>Desert Eagle</option></select>
-<button class="btn" id="add" data-i="ad">Add Player</button></div>
+<button class="btn" id="add" data-i="ad"></button></div>
 </section>
 </main>
-<footer data-i="ft">© CODM Legends Hub</footer>
+<footer data-i="ft"></footer>
 
 <script>
 var $=function(i){return document.getElementById(i)},root=document.documentElement;
 function sv(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function ld(k){try{return localStorage.getItem(k)}catch(e){return null}}
 
-/* ---------- UI handlers first, so the menu always works ---------- */
+/* ===== 1. UI handlers (always work) ===== */
 var dr=$("dr");
 $("bg").onclick=function(e){e.stopPropagation();dr.classList.toggle("open")};
 dr.onclick=function(e){e.stopPropagation()};
@@ -244,31 +244,42 @@ function setFr(f){root.dataset.fr=f;document.querySelectorAll(".sw").forEach(fun
 document.querySelectorAll(".mode").forEach(function(b){b.onclick=function(){setMode(b.dataset.m)}});
 document.querySelectorAll(".sw").forEach(function(b){b.onclick=function(){setFr(b.dataset.f)}});
 
-/* ---------- languages ---------- */
-var K=["t","s","hs","a1","a2","a3","a4","ha","hk","m1","m2","m3","m4","hp","c1","c2","c4","hb","bt","hm","mt","ad","ft","pn"];
+/* ===== 2. Translations (every visible text) ===== */
 var T={
-en:["Rise to Legendary","The ultimate hub for Call of Duty: Mobile players. Skins, weapons, ranks and glory.","Player Stats","Active Players","Matches Tracked","Legendary Ranks","Live Tournaments","Arsenal","Legendary Skins","Home","Legendary Players Panel","About Legendary Players","Management Panel","Legendary Players Panel","Player","Rank","Main Weapon","About Legendary Players","Legendary players sit at the very top of Call of Duty: Mobile ranked play. They are known for razor-sharp aim, smart map control and fearless clutch plays. This hub celebrates them with live rankings, loadouts and the rarest operator skins.","Management Panel","Add a player to the Legendary board (changes last only for this session).","Add Player","© CODM Legends Hub · Fan-made site, not affiliated with Activision.","Player name"],
-ko:["전설로 거듭나라","콜 오브 듀티 모바일 플레이어를 위한 최고의 허브. 스킨, 무기, 랭크, 그리고 영광.","플레이어 통계","활성 플레이어","추적된 매치","레전드 랭크","실시간 토너먼트","무기고","레전드 스킨","홈","레전드 플레이어 패널","레전드 플레이어 소개","관리 패널","레전드 플레이어 패널","플레이어","랭크","주무기","레전드 플레이어 소개","레전드 플레이어는 콜 오브 듀티 모바일 랭크전의 최정상에 있는 이들입니다. 날카로운 에임, 뛰어난 맵 장악력, 대담한 클러치 플레이로 유명합니다.","관리 패널","레전드 보드에 플레이어를 추가하세요 (이 세션에서만 유지됩니다).","플레이어 추가","© CODM Legends Hub · 팬 제작 사이트이며 액티비전과 무관합니다.","플레이어 이름"],
-de:["Werde zur Legende","Der ultimative Hub für Call of Duty: Mobile Spieler. Skins, Waffen, Ränge und Ruhm.","Spielerstatistiken","Aktive Spieler","Erfasste Matches","Legendäre Ränge","Live-Turniere","Arsenal","Legendäre Skins","Startseite","Panel der legendären Spieler","Über legendäre Spieler","Verwaltungspanel","Panel der legendären Spieler","Spieler","Rang","Hauptwaffe","Über legendäre Spieler","Legendäre Spieler stehen an der Spitze des Ranglistenspiels in Call of Duty: Mobile. Sie sind bekannt für messerscharfes Zielen, kluge Kartenkontrolle und furchtlose Clutch-Plays.","Verwaltungspanel","Füge einen Spieler zur Legend-Liste hinzu (nur in dieser Sitzung gültig).","Spieler hinzufügen","© CODM Legends Hub · Fan-Seite, nicht mit Activision verbunden.","Spielername"],
-fa:["به افسانه تبدیل شو","بهترین مرکز بازیکنان کالاف دیوتی موبایل: اسکین، سلاح، رتبه و افتخار.","آمار بازیکنان","بازیکن فعال","مسابقه ثبت‌شده","رتبه لجندری","تورنمنت زنده","زرادخانه","اسکین‌های لجندری","خانه","پنل بازیکنان لجندری","درباره بازیکنان لجندری","پنل مدیریت","پنل بازیکنان لجندری","بازیکن","رتبه","سلاح اصلی","درباره بازیکنان لجندری","بازیکنان لجندری در اوج رنکد کالاف دیوتی موبایل قرار دارند. آن‌ها به نشانه‌گیری دقیق، کنترل هوشمندانه نقشه و کلاچ‌های بی‌باکانه معروف‌اند.","پنل مدیریت","یک بازیکن به جدول لجندری اضافه کن (فقط در همین نشست باقی می‌ماند).","افزودن بازیکن","© CODM Legends Hub · سایت هواداری و غیروابسته به اکتیویژن.","نام بازیکن"]};
+en:{t:"Rise to Legendary",s:"The ultimate hub for Call of Duty: Mobile players. Skins, weapons, ranks and glory.",hs:"Player Stats",a1:"Active Players",a2:"Matches Tracked",a3:"Legendary Ranks",a4:"Live Tournaments",ha:"Arsenal",hk:"Legendary Skins",m1:"Home",m2:"Legendary Players Panel",m3:"About Legendary Players",m4:"Management Panel",hp:"Legendary Players Panel",c1:"Player",c2:"Rank",c4:"Main Weapon",hb:"About Legendary Players",bt:"Legendary players sit at the very top of Call of Duty: Mobile ranked play. They are known for razor-sharp aim, smart map control and fearless clutch plays. This hub celebrates them with live rankings, loadouts and the rarest operator skins.",hm:"Management Panel",mt:"Add a player to the Legendary board (changes last only for this session).",ad:"Add Player",ft:"© CODM Legends Hub · Fan-made site, not affiliated with Activision.",pn:"Player name",wt_ar:"Assault Rifle",wt_sn:"Sniper Rifle",wt_smg:"SMG",wt_sg:"Shotgun",wt_pi:"Pistol",wt_kn:"Melee",r_leg:"Legendary",r_myth:"Mythic",r_epic:"Epic",lvl:"Legendary"},
+ko:{t:"전설로 거듭나라",s:"콜 오브 듀티 모바일 플레이어를 위한 최고의 허브. 스킨, 무기, 랭크, 그리고 영광.",hs:"플레이어 통계",a1:"활성 플레이어",a2:"추적된 매치",a3:"레전드 랭크",a4:"실시간 토너먼트",ha:"무기고",hk:"레전드 스킨",m1:"홈",m2:"레전드 플레이어 패널",m3:"레전드 플레이어 소개",m4:"관리 패널",hp:"레전드 플레이어 패널",c1:"플레이어",c2:"랭크",c4:"주무기",hb:"레전드 플레이어 소개",bt:"레전드 플레이어는 콜 오브 듀티 모바일 랭크전의 최정상에 있는 이들입니다. 날카로운 에임, 뛰어난 맵 장악력, 대담한 클러치 플레이로 유명합니다.",hm:"관리 패널",mt:"레전드 보드에 플레이어를 추가하세요 (이 세션에서만 유지됩니다).",ad:"플레이어 추가",ft:"© CODM Legends Hub · 팬 제작 사이트이며 액티비전과 무관합니다.",pn:"플레이어 이름",wt_ar:"돌격소총",wt_sn:"저격소총",wt_smg:"기관단총",wt_sg:"산탄총",wt_pi:"권총",wt_kn:"근접무기",r_leg:"레전드",r_myth:"미식",r_epic:"에픽",lvl:"레전드"},
+de:{t:"Werde zur Legende",s:"Der ultimative Hub für Call of Duty: Mobile Spieler. Skins, Waffen, Ränge und Ruhm.",hs:"Spielerstatistiken",a1:"Aktive Spieler",a2:"Erfasste Matches",a3:"Legendäre Ränge",a4:"Live-Turniere",ha:"Arsenal",hk:"Legendäre Skins",m1:"Startseite",m2:"Panel der legendären Spieler",m3:"Über legendäre Spieler",m4:"Verwaltungspanel",hp:"Panel der legendären Spieler",c1:"Spieler",c2:"Rang",c4:"Hauptwaffe",hb:"Über legendäre Spieler",bt:"Legendäre Spieler stehen an der Spitze des Ranglistenspiels in Call of Duty: Mobile. Sie sind bekannt für messerscharfes Zielen, kluge Kartenkontrolle und furchtlose Clutch-Plays.",hm:"Verwaltungspanel",mt:"Füge einen Spieler zur Legend-Liste hinzu (nur in dieser Sitzung gültig).",ad:"Spieler hinzufügen",ft:"© CODM Legends Hub · Fan-Seite, nicht mit Activision verbunden.",pn:"Spielername",wt_ar:"Sturmgewehr",wt_sn:"Scharfschützengewehr",wt_smg:"Maschinenpistole",wt_sg:"Schrotflinte",wt_pi:"Pistole",wt_kn:"Nahkampf",r_leg:"Legendär",r_myth:"Mythisch",r_epic:"Episch",lvl:"Legende"},
+fa:{t:"به افسانه تبدیل شو",s:"بهترین مرکز بازیکنان کالاف دیوتی موبایل: اسکین، سلاح، رتبه و افتخار.",hs:"آمار بازیکنان",a1:"بازیکن فعال",a2:"مسابقه ثبت‌شده",a3:"رتبه لجندری",a4:"تورنمنت زنده",ha:"زرادخانه",hk:"اسکین‌های لجندری",m1:"خانه",m2:"پنل بازیکنان لجندری",m3:"درباره بازیکنان لجندری",m4:"پنل مدیریت",hp:"پنل بازیکنان لجندری",c1:"بازیکن",c2:"رتبه",c4:"سلاح اصلی",hb:"درباره بازیکنان لجندری",bt:"بازیکنان لجندری در اوج رنک کالاف دیوتی موبایل قرار دارند. آن‌ها به نشانه‌گیری دقیق، کنترل هوشمندانه نقشه و کلاچ‌های بی‌باکانه معروف‌اند.",hm:"پنل مدیریت",mt:"یک بازیکن به جدول لجندری اضافه کن (فقط در همین نشست باقی می‌ماند).",ad:"افزودن بازیکن",ft:"© CODM Legends Hub · سایت هواداری و غیروابسته به اکتیویژن.",pn:"نام بازیکن",wt_ar:"تفنگ تهاجمی",wt_sn:"تک‌تیرانداز",wt_smg:"مسلسل دستی",wt_sg:"شاتگان",wt_pi:"کلت",wt_kn:"سلاح سرد",r_leg:"لجندری",r_myth:"میتیک",r_epic:"اپیک",lvl:"لجندری"}
+};
+var cur="en";
+function tr(k){return (T[cur]&&T[cur][k])||T.en[k]||k}
+
+/* ===== 3. Data + rendering (rebuilt on every language change) ===== */
+var W=[["AK-47","ak","wt_ar"],["M4","m4","wt_ar"],["DL Q33","sn","wt_sn"],["MP5","smg","wt_smg"],["HS2126","sg","wt_sg"],["Desert Eagle","pi","wt_pi"],["Combat Knife","kn","wt_kn"]];
+var S=[["Ghost: Reaper","r_leg","#ff004c","#7a0030"],["Price: Gold Rush","r_myth","#ffb300","#b34a00"],["Soap: Frostbite","r_epic","#00d5ff","#005a8a"],["Nikto: Neon","r_leg","#a100ff","#3a0070"],["Zero: Inferno","r_myth","#ff6a00","#7a1500"],["Mara: Venom","r_epic","#00e676","#00582a"]];
+var P=[["ShadowViper","I",2.9,"AK-47"],["NovaStrike","I",2.7,"DL Q33"],["IronWolf","II",2.5,"M4"],["GhostMamba","II",2.4,"MP5"],["BlazeKing","III",2.2,"HS2126"]];
+function render(){
+  $("wg").innerHTML=W.map(function(w){return'<div class="card wp"><svg viewBox="0 0 240 80"><use href="#'+w[1]+'"/></svg><h3>'+w[0]+'</h3><small>'+tr(w[2])+'</small></div>'}).join("");
+  $("sk").innerHTML=S.map(function(s,j){var w=W[j%W.length];return'<div class="card skin" style="--k1:'+s[2]+';--k2:'+s[3]+'"><svg viewBox="0 0 240 80"><use href="#'+w[1]+'"/></svg><h3>'+s[0]+'</h3><small>'+tr(s[1])+'</small></div>'}).join("");
+  $("tb").innerHTML=P.map(function(p,x){return"<tr><td>"+(x+1)+"</td><td>"+p[0]+"</td><td><span class=tag>"+tr("lvl")+" "+p[1]+"</span></td><td>"+p[2]+"</td><td>"+p[3]+"</td></tr>"}).join("");
+}
+$("add").onclick=function(){var n=$("n").value.trim();if(!n)return;P.push([n,"V",parseFloat($("k").value)||1,$("w").value]);P.sort(function(a,b){return b[2]-a[2]});render();$("n").value=""};
+
+/* ===== 4. Language switch ===== */
 var SH={en:"EN",ko:"KO",de:"DE",fa:"FA"};
 function setLang(l){
-K.forEach(function(k,i){if(k=="pn"){$("n").placeholder=T[l][i];return}
-document.querySelectorAll('[data-i="'+k+'"]').forEach(function(e){e.textContent=T[l][i]})});
-root.lang=l;root.dir=l=="fa"?"rtl":"ltr";$("lcur").textContent=SH[l];
-document.querySelectorAll(".lg").forEach(function(b){b.classList.toggle("on",b.dataset.l==l)});sv("codm_l",l)}
+  cur=T[l]?l:"en";
+  document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=tr(e.dataset.i)});
+  $("n").placeholder=tr("pn");
+  root.lang=cur;root.dir=cur=="fa"?"rtl":"ltr";$("lcur").textContent=SH[cur];
+  document.querySelectorAll(".lg").forEach(function(b){b.classList.toggle("on",b.dataset.l==cur)});
+  try{render()}catch(e){console.error(e)}
+  sv("codm_l",cur);
+}
 document.querySelectorAll(".lg").forEach(function(b){b.onclick=function(){setLang(b.dataset.l);$("lp").classList.remove("on")}});
-setMode(ld("codm_m")||"dark");setFr(ld("codm_f")||"rainbow");setLang(ld("codm_l")||"en");
 
-/* ---------- content (after the UI is live) ---------- */
-try{
-var W=[["AK-47","ak","Assault Rifle"],["M4","m4","Assault Rifle"],["DL Q33","sn","Sniper Rifle"],["MP5","smg","SMG"],["HS2126","sg","Shotgun"],["Desert Eagle","pi","Pistol"],["Combat Knife","kn","Melee"]];
-var S=[["Ghost: Reaper","Legendary","#ff004c","#7a0030"],["Price: Gold Rush","Mythic","#ffb300","#b34a00"],["Soap: Frostbite","Epic","#00d5ff","#005a8a"],["Nikto: Neon","Legendary","#a100ff","#3a0070"],["Zero: Inferno","Mythic","#ff6a00","#7a1500"],["Mara: Venom","Epic","#00e676","#00582a"]];
-$("wg").innerHTML=W.map(function(w){return'<div class="card wp"><svg viewBox="0 0 240 80"><use href="#'+w[1]+'"/></svg><h3>'+w[0]+'</h3><small>'+w[2]+'</small></div>'}).join("");
-$("sk").innerHTML=S.map(function(s,j){var w=W[j%W.length];return'<div class="card skin" style="--k1:'+s[2]+';--k2:'+s[3]+'"><svg viewBox="0 0 240 80"><use href="#'+w[1]+'"/></svg><h3>'+s[0]+'</h3><small>'+s[1]+'</small></div>'}).join("");
-var P=[["ShadowViper","Legendary I",2.9,"AK-47"],["NovaStrike","Legendary I",2.7,"DL Q33"],["IronWolf","Legendary II",2.5,"M4"],["GhostMamba","Legendary II",2.4,"MP5"],["BlazeKing","Legendary III",2.2,"HS2126"]];
-function draw(){$("tb").innerHTML=P.map(function(p,x){return"<tr><td>"+(x+1)+"</td><td>"+p[0]+"</td><td><span class=tag>"+p[1]+"</span></td><td>"+p[2]+"</td><td>"+p[3]+"</td></tr>"}).join("")}
-draw();
-$("add").onclick=function(){var n=$("n").value.trim();if(!n)return;P.push([n,"Legendary V",parseFloat($("k").value)||1,$("w").value]);P.sort(function(a,b){return b[2]-a[2]});draw();$("n").value=""};
-}catch(err){console.error(err)}
+/* ===== 5. Start ===== */
+try{setMode(ld("codm_m")||"dark")}catch(e){}
+try{setFr(ld("codm_f")||"rainbow")}catch(e){}
+setLang(ld("codm_l")||"en");
 </script></body></html>
