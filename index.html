@@ -333,7 +333,6 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--ac
 .stat{position:relative;overflow:hidden;transition:.3s}
 .stat::before{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2))}
 .stat:hover{transform:translateY(-4px);border-color:var(--acc);box-shadow:0 10px 26px rgba(255,140,0,.25)}
-.stat em{display:block;font-style:normal;font-size:24px;margin-bottom:4px}
 .stat b{font-size:28px;text-shadow:0 0 16px rgba(255,179,0,.5)}
 .stat span{color:var(--mut);font-size:15px}
 
@@ -348,14 +347,14 @@ background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent);
 .card h3{font-size:15px;letter-spacing:1px}
 .card small{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:99px;border:1px solid var(--bd);font-size:14px}
 .im.noimg img{display:none}
-.im.noimg::after{content:"🎯";font-size:40px;opacity:.6}
+.im.noimg::after{content:"CODM";font-size:16px;font-weight:900;opacity:.5}
 
 table{border:1px solid var(--bd);border-radius:14px}
 thead tr{background:linear-gradient(90deg,rgba(255,179,0,.22),transparent)}
 tbody tr{transition:.25s}
 tbody tr:hover{background:rgba(255,179,0,.1)}
 tbody tr:nth-child(1){background:linear-gradient(90deg,rgba(255,215,0,.18),transparent)}
-tbody tr:nth-child(-n+3) td:first-child{font-size:20px}
+tbody tr:nth-child(-n+3) td:first-child{color:var(--acc);font-weight:900}
 .kd{display:flex;align-items:center;gap:8px;min-width:120px}
 .kd b{min-width:32px;color:var(--acc)}
 .kd u{flex:1;height:6px;border-radius:4px;background:var(--bd);overflow:hidden;text-decoration:none}
@@ -372,6 +371,8 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 .toast.on{opacity:1;visibility:visible;translate:-50% 0}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+.tdot{display:block;width:18px;height:18px;border-radius:50%;background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)}
+.mode{font-size:14px}
 </style>
 </head>
 <body>
@@ -389,7 +390,7 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 <div class="logo">CODM<b>LEGENDS</b></div>
 </div>
 <div class="ctl">
-<button class="ib" id="lbtn" aria-label="Language">🌐 <span id="lcur">EN</span></button>
+<button class="ib" id="lbtn" aria-label="Language"><span id="lcur">EN</span></button>
 <div class="pop" id="lp">
 <button class="lg on" data-l="en">English</button>
 <button class="lg" data-l="ko">한국어</button>
@@ -398,11 +399,11 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 </div>
 </div>
 <div class="ctl">
-<button class="ib" id="tbtn" aria-label="Theme">🎨</button>
+<button class="ib" id="tbtn" aria-label="Theme"><span class="tdot"></span></button>
 <div class="pop" id="tp">
 <div class="row">
-<button class="mode" data-m="light">☀</button>
-<button class="mode on" data-m="dark">☾</button>
+<button class="mode" data-m="light">Light</button>
+<button class="mode on" data-m="dark">Dark</button>
 </div>
 <div class="row" style="flex-wrap:wrap">
 <button class="sw on" data-f="rainbow" style="background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)"></button>
@@ -417,10 +418,10 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 </header>
 
 <aside class="drawer" id="dr">
-<button data-v="home">⌂ <span data-i="m1"></span></button>
-<button data-v="players">★ <span data-i="m2"></span></button>
-<button data-v="about">ℹ <span data-i="m3"></span></button>
-<button data-v="admin">⚙ <span data-i="m4"></span></button>
+<button data-v="home"><span data-i="m1"></span></button>
+<button data-v="players"><span data-i="m2"></span></button>
+<button data-v="about"><span data-i="m3"></span></button>
+<button data-v="admin"><span data-i="m4"></span></button>
 </aside>
 
 <main>
@@ -440,10 +441,10 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 </div>
 <h2 data-i="hs"></h2>
 <div class="stats">
-<div class="stat"><em>👥</em><b data-to="12.4" data-dec="1" data-suf="K">12.4K</b><span data-i="a1"></span></div>
-<div class="stat"><em>🎮</em><b data-to="3.1" data-dec="1" data-suf="M">3.1M</b><span data-i="a2"></span></div>
-<div class="stat"><em>🏆</em><b data-to="98">98</b><span data-i="a3"></span></div>
-<div class="stat"><em>📡</em><b>24/7</b><span data-i="a4"></span></div>
+<div class="stat"><b data-to="12.4" data-dec="1" data-suf="K">12.4K</b><span data-i="a1"></span></div>
+<div class="stat"><b data-to="3.1" data-dec="1" data-suf="M">3.1M</b><span data-i="a2"></span></div>
+<div class="stat"><b data-to="98">98</b><span data-i="a3"></span></div>
+<div class="stat"><b>24/7</b><span data-i="a4"></span></div>
 </div>
 <h2 data-i="ha"></h2>
 <div class="grid" id="wg"></div>
@@ -496,10 +497,10 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 </div>
 <div>
 <h4 data-i="fq"></h4>
-<a href="#" data-go="home">⌂ <span data-i="m1"></span></a>
-<a href="#" data-go="players">★ <span data-i="m2"></span></a>
-<a href="#" data-go="about">ℹ <span data-i="m3"></span></a>
-<a href="#" data-go="admin">⚙ <span data-i="m4"></span></a>
+<a href="#" data-go="home"><span data-i="m1"></span></a>
+<a href="#" data-go="players"><span data-i="m2"></span></a>
+<a href="#" data-go="about"><span data-i="m3"></span></a>
+<a href="#" data-go="admin"><span data-i="m4"></span></a>
 </div>
 <div>
 <h4 data-i="fc"></h4>
@@ -513,7 +514,7 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 </div>
 
 <div class="credit">
-<small>★ CODM LEGENDS HUB ★</small>
+<small>CODM LEGENDS HUB</small>
 <strong data-i="cr"></strong>
 </div>
 
@@ -789,7 +790,7 @@ return '<div class="card" style="--d:'+(i*70)+'ms"><div class="im"><img src="'+I
 }).join("");
 
 $("tb").innerHTML=P.map(function(p,x){
-return "<tr><td>"+(["🥇","🥈","🥉"][x]||(x+1))+"</td><td>"+esc(p[0])+"</td><td><span class=tag>"+tr("lvl")+" "+esc(p[1])+"</span></td><td><div class=kd><b>"+esc(p[2])+"</b><u><i style=width:"+Math.min(100,p[2]/3.5*100)+"%></i></u></div></td><td>"+esc(p[3])+"</td></tr>"
+return "<tr><td>"+(x+1)+"</td><td>"+esc(p[0])+"</td><td><span class=tag>"+tr("lvl")+" "+esc(p[1])+"</span></td><td><div class=kd><b>"+esc(p[2])+"</b><u><i style=width:"+Math.min(100,p[2]/3.5*100)+"%></i></u></div></td><td>"+esc(p[3])+"</td></tr>"
 }).join("");
 }
 
