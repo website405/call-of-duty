@@ -557,7 +557,13 @@ m4:"M4_black_gold_royal.png",
 bal:"BAL-27%20-%20Core%20of%20Reason.png",
 static:"Static-HV%20-%20Core%20of%20Fire.png",
 iso:"ISO%20Hemlock%20-%20Core%20of%20Thunder.png",
-grau:"Grau%205.56%20-%20Phantom%27s%20Core.png"
+grau:"Grau%205.56%20-%20Phantom%27s%20Core.png",
+cx9:"CX-9%20-%20Dragon%27s%20Wrath.png",
+grav:"Grav%20-%20Vitae%20Devourer.png",
+ram7:"RAM-7-%20Nebula%27s%20Brush.png",
+lach:"Lachmann-556%20-%20Forged%20Calamity.png",
+asval:"As_aval.png",
+hur:"Hurricane%20-%20Shadow%20%26%20Shade%20%D9%88.png"
 };
 
 function news(){
@@ -785,7 +791,8 @@ fc:"انجمن‌ها"
 var cur="en";
 function tr(k){return (T[cur]&&T[cur][k])||T.en[k]||k}
 
-// weapons: name, image key, type
+// weapons: name, image key, type, optional rarity key (default r_myth)
+// type "SMG" has no translation key, so it shows as "SMG" in every language
 var W=[
 ["AK117","ak117","wt_ar"],
 ["AK-47","ak47","wt_ar"],
@@ -794,7 +801,13 @@ var W=[
 ["BAL-27","bal","wt_ar"],
 ["Static-HV","static","wt_sn"],
 ["ISO Hemlock","iso","wt_ar"],
-["Grau 5.56","grau","wt_ar"]
+["Grau 5.56","grau","wt_ar"],
+["CX-9","cx9","SMG","lvl"],
+["Grav","grav","wt_ar","lvl"],
+["RAM-7","ram7","wt_ar"],
+["Lachmann-556","lach","wt_ar"],
+["AS VAL","asval","wt_ar"],
+["Hurricane","hur","SMG"]
 ];
 
 // players: name, rank, kd, weapon
@@ -808,7 +821,7 @@ var P=[
 
 function render(){
 $("wg").innerHTML=W.map(function(w,i){
-return '<div class="card" style="--d:'+(i*70)+'ms"><div class="im"><img src="'+IMG[w[1]]+'" alt="'+w[0]+'" loading="lazy" onerror="hide(this)"></div><h3>'+w[0]+'</h3><small>'+tr(w[2])+' · '+tr("r_myth")+'</small></div>'
+return '<div class="card" style="--d:'+(i*70)+'ms"><div class="im"><img src="'+IMG[w[1]]+'" alt="'+w[0]+'" loading="lazy" onerror="hide(this)"></div><h3>'+w[0]+'</h3><small>'+tr(w[2])+' · '+tr(w[3]||"r_myth")+'</small></div>'
 }).join("");
 
 $("tb").innerHTML=P.map(function(p,x){
