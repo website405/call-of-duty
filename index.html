@@ -118,7 +118,7 @@ position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);
 opacity:0;visibility:hidden;transition:.3s;z-index:30
 }
 .ov.on{opacity:1;visibility:visible}
-.drawer{
+.drawer{overflow-y:auto;
 position:fixed;top:0;inset-inline-start:-300px;width:280px;height:100%;
 background:var(--hd);z-index:40;padding:80px 18px 20px;
 border-inline-end:2px solid var(--acc);transition:inset-inline-start .3s
@@ -936,6 +936,14 @@ x.shadowBlur=8;x.shadowColor="#ff7a00";x.fill()
 requestAnimationFrame(f)
 })()
 })();
+
+function fixDr(){
+if(!dr.classList.contains("open"))return;
+dr.style.paddingTop=(document.querySelector("header").getBoundingClientRect().bottom+14)+"px"
+}
+new MutationObserver(fixDr).observe(dr,{attributes:true,attributeFilter:["class"]});
+addEventListener("scroll",fixDr);
+addEventListener("resize",fixDr);
 </script>
 
 </body>
