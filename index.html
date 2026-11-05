@@ -390,7 +390,9 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 .vw.on{display:flex;animation:vin .35s ease-out}
 .vst{width:min(94vw,900px);height:min(60vh,560px);display:grid;place-items:center;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;border-radius:18px;background:radial-gradient(circle,rgba(255,179,0,.22),rgba(0,0,0,.2) 70%)}
 .vst.dg{cursor:grabbing}
-.vst img{max-width:100%;max-height:100%;pointer-events:none;will-change:transform;filter:drop-shadow(0 12px 30px rgba(0,0,0,.6))}
+.vst{perspective:1100px}
+.v3{position:relative;transform-style:preserve-3d;will-change:transform}
+.v3 img{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none}
 .vn{font-family:var(--hf);font-weight:900;font-size:clamp(18px,5vw,26px);color:var(--acc);letter-spacing:2px;text-align:center}
 .vh{color:var(--mut);font-size:14px;text-align:center}
 .vx,.vr{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));width:46px;height:46px;border-radius:50%;border:2px solid var(--acc);background:var(--hd);color:var(--acc);font-size:20px;cursor:pointer;padding:0}
@@ -554,7 +556,7 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 <div class="vw" id="vw" aria-hidden="true">
 <button class="vx" id="vx" aria-label="Close">&#10005;</button>
 <button class="vr" id="vr" aria-label="Reset">&#8634;</button>
-<div class="vst" id="vst"><img id="vim" alt="" draggable="false"></div>
+<div class="vst" id="vst"><div class="v3" id="v3"></div></div>
 <div class="vn" id="vn"></div>
 <div class="vh" data-i="hint"></div>
 </div>
@@ -701,7 +703,7 @@ lvl:"Legendary",
 fd:"The ultimate fan hub for Call of Duty: Mobile legends.",
 b1:"Meet the Legends",b2:"Learn More",ta:"Player added!",hk:"Skins",cs:"Coming Soon",nl:"NEWS",n1:"Being a legend is not about your level, it is about the player.",n2:"New skins are coming soon.",n3:"Welcome to CODM Legends Hub.",fq:"Quick Links",
 fc:"Community",
-hint:"Drag to rotate 360° · double-tap to reset"
+hint:"Drag to spin 360° and tilt · double-tap to reset"
 },
 
 ko:{
@@ -737,7 +739,7 @@ lvl:"레전드",
 fd:"콜 오브 듀티 모바일 레전드를 위한 최고의 팬 허브.",
 b1:"레전드 보기",b2:"더 알아보기",ta:"플레이어가 추가되었습니다!",hk:"스킨",cs:"곧 출시",nl:"뉴스",n1:"레전드는 레벨이 아니라 플레이어에게 달려 있습니다.",n2:"새로운 스킨이 곧 출시됩니다.",n3:"CODM Legends Hub에 오신 것을 환영합니다.",fq:"바로가기",
 fc:"커뮤니티",
-hint:"드래그하여 360° 회전 · 두 번 탭하면 초기화"
+hint:"드래그하여 360° 회전 및 기울이기 · 두 번 탭하면 초기화"
 },
 
 de:{
@@ -773,7 +775,7 @@ lvl:"Legende",
 fd:"Der ultimative Fan-Hub für Call of Duty: Mobile Legenden.",
 b1:"Legenden ansehen",b2:"Mehr erfahren",ta:"Spieler hinzugefügt!",hk:"Skins",cs:"Demnächst",nl:"NEWS",n1:"Eine Legende zu sein hängt nicht vom Level ab, sondern vom Spieler.",n2:"Neue Skins erscheinen bald.",n3:"Willkommen im CODM Legends Hub.",fq:"Schnellzugriff",
 fc:"Community",
-hint:"Ziehen zum Drehen um 360° · Doppeltippen zum Zurücksetzen"
+hint:"Ziehen zum Drehen um 360° und Kippen · Doppeltippen zum Zurücksetzen"
 },
 
 fa:{
@@ -809,7 +811,7 @@ lvl:"لجندری",
 fd:"بهترین مرکز هواداران لجندهای کالاف دیوتی موبایل.",
 b1:"دیدن لجندها",b2:"بیشتر بدانید",ta:"بازیکن اضافه شد!",hk:"اسکین‌ها",cs:"به زودی",nl:"اخبار",n1:"لجند بودن به لول نیست، به پلیر است.",n2:"اسکین‌های جدید به زودی می‌رسند.",n3:"به CODM Legends Hub خوش آمدید.",fq:"دسترسی سریع",
 fc:"انجمن‌ها",
-hint:"برای چرخش ۳۶۰ درجه بکش · دو بار بزن تا به حالت اول برگردد"
+hint:"برای چرخش ۳۶۰ درجه و کج‌کردن بکش · دو بار بزن تا به حالت اول برگردد"
 }
 
 };
@@ -984,63 +986,83 @@ new MutationObserver(fixDr).observe(dr,{attributes:true,attributeFilter:["class"
 addEventListener("scroll",fixDr);
 addEventListener("resize",fixDr);
 
-// ---- 360 viewer ----
-var V={a:0,v:0,drag:false,lx:0,raf:0};
+// ---- 3D flip viewer (front and back, tilt) ----
+var V={a:0,t:0,va:0,vt:0,drag:false,lx:0,ly:0,raf:0,tk:0,src:"",nw:0,nh:0};
+function clampT(x){return Math.max(-35,Math.min(35,x))}
 function vApply(){
-var img=$("vim"),st=$("vst"),Cw=st.clientWidth,Ch=st.clientHeight;
-var nw=img.naturalWidth||1,nh=img.naturalHeight||1;
-var k=Math.min(Cw/nw,Ch/nh,1),w=nw*k,h=nh*k;
-var r=V.a*Math.PI/180,c=Math.abs(Math.cos(r)),sn=Math.abs(Math.sin(r));
-var f=Math.min(1,Cw/(w*c+h*sn),Ch/(w*sn+h*c));
-img.style.transform="rotate("+V.a+"deg) scale("+f+")"
+$("v3").style.transform="rotateX("+V.t+"deg) rotateY("+V.a+"deg)"
+}
+function vBuild(){
+var st=$("vst"),v=$("v3");
+var k=Math.min(st.clientWidth/V.nw,st.clientHeight/V.nh,1)*.9;
+v.style.width=V.nw*k+"px";
+v.style.height=V.nh*k+"px";
+var N=7,gap=2.5,h="";
+for(var i=0;i<N;i++){
+var z=(i-(N-1)/2)*gap,edge=(i==0||i==N-1);
+h+='<img src="'+V.src+'" alt="" draggable="false" style="transform:translateZ('+z+'px);'+(edge?'':'filter:brightness(.4)')+'">'
+}
+v.innerHTML=h;
+vApply()
 }
 function vTick(){
 if(V.drag){V.raf=0;return}
-V.a+=V.v;V.v*=.95;
-if(Math.abs(V.v)<.05){V.v=0;V.raf=0;vApply();return}
+V.a+=V.va;V.va*=.95;
+V.t=clampT(V.t+V.vt);V.vt*=.9;
+if(Math.abs(V.va)<.05&&Math.abs(V.vt)<.05){V.va=0;V.vt=0;V.raf=0;vApply();return}
 vApply();V.raf=requestAnimationFrame(vTick)
 }
 function openV(i){
-var w=W[i],im=$("vim");
-cancelAnimationFrame(V.raf);V.a=0;V.v=0;
-im.style.transition="";
-im.src=IMG[w[1]];im.alt=w[0];
+var w=W[i],tk=++V.tk;
+cancelAnimationFrame(V.raf);
+V.a=0;V.t=0;V.va=0;V.vt=0;
+$("v3").style.transition="";
+$("v3").innerHTML="";
 $("vn").textContent=w[0];
 $("vw").classList.add("on");
 $("vw").setAttribute("aria-hidden","false");
 document.body.style.overflow="hidden";
-vApply()
+var im=new Image();
+im.onload=function(){
+if(tk!=V.tk)return;
+V.src=im.src;V.nw=im.naturalWidth||1;V.nh=im.naturalHeight||1;
+vBuild()
+};
+im.src=IMG[w[1]]
 }
 function closeV(){
+V.tk++;
 cancelAnimationFrame(V.raf);
 $("vw").classList.remove("on");
 $("vw").setAttribute("aria-hidden","true");
 document.body.style.overflow=""
 }
 function resetV(){
-cancelAnimationFrame(V.raf);V.v=0;
-var im=$("vim");
+cancelAnimationFrame(V.raf);V.va=0;V.vt=0;
+var v=$("v3");
 V.a=((V.a%360)+540)%360-180;
-im.style.transition="";vApply();
-void im.offsetWidth;
-im.style.transition="transform .5s cubic-bezier(.2,.8,.2,1)";
-V.a=0;vApply();
-setTimeout(function(){im.style.transition=""},550)
+v.style.transition="";vApply();
+void v.offsetWidth;
+v.style.transition="transform .55s cubic-bezier(.2,.8,.2,1)";
+V.a=0;V.t=0;vApply();
+setTimeout(function(){v.style.transition=""},600)
 }
-$("vim").onload=vApply;
-addEventListener("resize",function(){if($("vw").classList.contains("on"))vApply()});
+addEventListener("resize",function(){if($("vw").classList.contains("on")&&V.src)vBuild()});
 var vs=$("vst");
 vs.onpointerdown=function(e){
-V.drag=true;V.lx=e.clientX;V.v=0;
+V.drag=true;V.lx=e.clientX;V.ly=e.clientY;V.va=0;V.vt=0;
 cancelAnimationFrame(V.raf);
-$("vim").style.transition="";
+$("v3").style.transition="";
 vs.classList.add("dg");
 try{vs.setPointerCapture(e.pointerId)}catch(x){}
 };
 vs.onpointermove=function(e){
 if(!V.drag)return;
-var dx=e.clientX-V.lx;V.lx=e.clientX;
-V.v=dx*.6;V.a+=dx*.6;vApply()
+var dx=e.clientX-V.lx,dy=e.clientY-V.ly;
+V.lx=e.clientX;V.ly=e.clientY;
+V.va=dx*.6;V.vt=-dy*.3;
+V.a+=V.va;V.t=clampT(V.t+V.vt);
+vApply()
 };
 function vUp(){
 if(!V.drag)return;
