@@ -384,6 +384,19 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 .nt span::before{content:"";width:7px;height:7px;margin:0 18px;background:var(--acc);transform:rotate(45deg);flex:none}
 .news:hover .nt{animation-play-state:paused}
 [dir=rtl] .nt span{direction:rtl}
+
+.card{cursor:pointer}
+.vw{position:fixed;inset:0;z-index:70;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:calc(16px + env(safe-area-inset-top,0px)) 14px calc(16px + env(safe-area-inset-bottom,0px));background:rgba(4,6,4,.93);backdrop-filter:blur(6px)}
+.vw.on{display:flex;animation:vin .35s ease-out}
+.vst{width:min(94vw,900px);height:min(60vh,560px);display:grid;place-items:center;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;border-radius:18px;background:radial-gradient(circle,rgba(255,179,0,.22),rgba(0,0,0,.2) 70%)}
+.vst.dg{cursor:grabbing}
+.vst img{max-width:100%;max-height:100%;pointer-events:none;will-change:transform;filter:drop-shadow(0 12px 30px rgba(0,0,0,.6))}
+.vn{font-family:var(--hf);font-weight:900;font-size:clamp(18px,5vw,26px);color:var(--acc);letter-spacing:2px;text-align:center}
+.vh{color:var(--mut);font-size:14px;text-align:center}
+.vx,.vr{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));width:46px;height:46px;border-radius:50%;border:2px solid var(--acc);background:var(--hd);color:var(--acc);font-size:20px;cursor:pointer;padding:0}
+.vx{inset-inline-end:14px}
+.vr{inset-inline-start:14px}
+.vx:hover,.vr:hover{background:var(--acc);color:#111}
 </style>
 </head>
 <body>
@@ -537,6 +550,15 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 <div class="fine" data-i="ft"></div>
 </footer>
 
+
+<div class="vw" id="vw" aria-hidden="true">
+<button class="vx" id="vx" aria-label="Close">&#10005;</button>
+<button class="vr" id="vr" aria-label="Reset">&#8634;</button>
+<div class="vst" id="vst"><img id="vim" alt="" draggable="false"></div>
+<div class="vn" id="vn"></div>
+<div class="vh" data-i="hint"></div>
+</div>
+
 <script>
 var $=function(i){return document.getElementById(i)},root=document.documentElement;
 
@@ -678,7 +700,8 @@ r_myth:"Mythic",
 lvl:"Legendary",
 fd:"The ultimate fan hub for Call of Duty: Mobile legends.",
 b1:"Meet the Legends",b2:"Learn More",ta:"Player added!",hk:"Skins",cs:"Coming Soon",nl:"NEWS",n1:"Being a legend is not about your level, it is about the player.",n2:"New skins are coming soon.",n3:"Welcome to CODM Legends Hub.",fq:"Quick Links",
-fc:"Community"
+fc:"Community",
+hint:"Drag to rotate 360° · double-tap to reset"
 },
 
 ko:{
@@ -713,7 +736,8 @@ r_myth:"미식",
 lvl:"레전드",
 fd:"콜 오브 듀티 모바일 레전드를 위한 최고의 팬 허브.",
 b1:"레전드 보기",b2:"더 알아보기",ta:"플레이어가 추가되었습니다!",hk:"스킨",cs:"곧 출시",nl:"뉴스",n1:"레전드는 레벨이 아니라 플레이어에게 달려 있습니다.",n2:"새로운 스킨이 곧 출시됩니다.",n3:"CODM Legends Hub에 오신 것을 환영합니다.",fq:"바로가기",
-fc:"커뮤니티"
+fc:"커뮤니티",
+hint:"드래그하여 360° 회전 · 두 번 탭하면 초기화"
 },
 
 de:{
@@ -748,7 +772,8 @@ r_myth:"Mythisch",
 lvl:"Legende",
 fd:"Der ultimative Fan-Hub für Call of Duty: Mobile Legenden.",
 b1:"Legenden ansehen",b2:"Mehr erfahren",ta:"Spieler hinzugefügt!",hk:"Skins",cs:"Demnächst",nl:"NEWS",n1:"Eine Legende zu sein hängt nicht vom Level ab, sondern vom Spieler.",n2:"Neue Skins erscheinen bald.",n3:"Willkommen im CODM Legends Hub.",fq:"Schnellzugriff",
-fc:"Community"
+fc:"Community",
+hint:"Ziehen zum Drehen um 360° · Doppeltippen zum Zurücksetzen"
 },
 
 fa:{
@@ -783,7 +808,8 @@ r_myth:"میتیک",
 lvl:"لجندری",
 fd:"بهترین مرکز هواداران لجندهای کالاف دیوتی موبایل.",
 b1:"دیدن لجندها",b2:"بیشتر بدانید",ta:"بازیکن اضافه شد!",hk:"اسکین‌ها",cs:"به زودی",nl:"اخبار",n1:"لجند بودن به لول نیست، به پلیر است.",n2:"اسکین‌های جدید به زودی می‌رسند.",n3:"به CODM Legends Hub خوش آمدید.",fq:"دسترسی سریع",
-fc:"انجمن‌ها"
+fc:"انجمن‌ها",
+hint:"برای چرخش ۳۶۰ درجه بکش · دو بار بزن تا به حالت اول برگردد"
 }
 
 };
@@ -821,7 +847,7 @@ var P=[
 
 function render(){
 $("wg").innerHTML=W.map(function(w,i){
-return '<div class="card" style="--d:'+(i*70)+'ms"><div class="im"><img src="'+IMG[w[1]]+'" alt="'+w[0]+'" loading="lazy" onerror="hide(this)"></div><h3>'+w[0]+'</h3><small>'+tr(w[2])+' · '+tr(w[3]||"r_myth")+'</small></div>'
+return '<div class="card" data-w="'+i+'" style="--d:'+(i*70)+'ms"><div class="im"><img src="'+IMG[w[1]]+'" alt="'+w[0]+'" loading="lazy" onerror="hide(this)"></div><h3>'+w[0]+'</h3><small>'+tr(w[2])+' · '+tr(w[3]||"r_myth")+'</small></div>'
 }).join("");
 
 $("tb").innerHTML=P.map(function(p,x){
@@ -957,6 +983,86 @@ dr.style.top=document.querySelector("header").getBoundingClientRect().bottom+"px
 new MutationObserver(fixDr).observe(dr,{attributes:true,attributeFilter:["class"]});
 addEventListener("scroll",fixDr);
 addEventListener("resize",fixDr);
+
+// ---- 360 viewer ----
+var V={a:0,v:0,drag:false,lx:0,raf:0};
+function vApply(){
+var img=$("vim"),st=$("vst"),Cw=st.clientWidth,Ch=st.clientHeight;
+var nw=img.naturalWidth||1,nh=img.naturalHeight||1;
+var k=Math.min(Cw/nw,Ch/nh,1),w=nw*k,h=nh*k;
+var r=V.a*Math.PI/180,c=Math.abs(Math.cos(r)),sn=Math.abs(Math.sin(r));
+var f=Math.min(1,Cw/(w*c+h*sn),Ch/(w*sn+h*c));
+img.style.transform="rotate("+V.a+"deg) scale("+f+")"
+}
+function vTick(){
+if(V.drag){V.raf=0;return}
+V.a+=V.v;V.v*=.95;
+if(Math.abs(V.v)<.05){V.v=0;V.raf=0;vApply();return}
+vApply();V.raf=requestAnimationFrame(vTick)
+}
+function openV(i){
+var w=W[i],im=$("vim");
+cancelAnimationFrame(V.raf);V.a=0;V.v=0;
+im.style.transition="";
+im.src=IMG[w[1]];im.alt=w[0];
+$("vn").textContent=w[0];
+$("vw").classList.add("on");
+$("vw").setAttribute("aria-hidden","false");
+document.body.style.overflow="hidden";
+vApply()
+}
+function closeV(){
+cancelAnimationFrame(V.raf);
+$("vw").classList.remove("on");
+$("vw").setAttribute("aria-hidden","true");
+document.body.style.overflow=""
+}
+function resetV(){
+cancelAnimationFrame(V.raf);V.v=0;
+var im=$("vim");
+V.a=((V.a%360)+540)%360-180;
+im.style.transition="";vApply();
+void im.offsetWidth;
+im.style.transition="transform .5s cubic-bezier(.2,.8,.2,1)";
+V.a=0;vApply();
+setTimeout(function(){im.style.transition=""},550)
+}
+$("vim").onload=vApply;
+addEventListener("resize",function(){if($("vw").classList.contains("on"))vApply()});
+var vs=$("vst");
+vs.onpointerdown=function(e){
+V.drag=true;V.lx=e.clientX;V.v=0;
+cancelAnimationFrame(V.raf);
+$("vim").style.transition="";
+vs.classList.add("dg");
+try{vs.setPointerCapture(e.pointerId)}catch(x){}
+};
+vs.onpointermove=function(e){
+if(!V.drag)return;
+var dx=e.clientX-V.lx;V.lx=e.clientX;
+V.v=dx*.6;V.a+=dx*.6;vApply()
+};
+function vUp(){
+if(!V.drag)return;
+V.drag=false;vs.classList.remove("dg");
+V.raf=requestAnimationFrame(vTick)
+}
+vs.onpointerup=vs.onpointercancel=vUp;
+vs.ondblclick=resetV;
+$("vx").onclick=closeV;
+$("vr").onclick=resetV;
+$("vw").onclick=function(e){if(e.target===this)closeV()};
+addEventListener("keydown",function(e){
+if(!$("vw").classList.contains("on"))return;
+if(e.key=="Escape")closeV();
+if(e.key=="ArrowLeft"){V.a-=15;vApply()}
+if(e.key=="ArrowRight"){V.a+=15;vApply()}
+});
+$("wg").onclick=function(e){
+var c=e.target.closest?e.target.closest(".card"):null;
+if(c)openV(+c.dataset.w)
+};
+$("sl").onclick=function(){openV(si)};
 </script>
 
 </body>
