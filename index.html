@@ -53,7 +53,6 @@ background:var(--hd);backdrop-filter:blur(8px);
 border-bottom:1px solid var(--bd)
 }
 
-/* ===== Burger ===== */
 .burger{
 position:relative;background:none;border:1px solid var(--bd);border-radius:8px;
 width:44px;height:40px;display:flex;flex-direction:column;
@@ -114,7 +113,6 @@ border:1px solid var(--bd);border-radius:8px;padding:8px;font-size:18px;cursor:p
 .sw{width:30px;height:30px;border-radius:50%;border:2px solid var(--bd);cursor:pointer;padding:0}
 .sw.on{box-shadow:0 0 0 3px var(--acc)}
 
-/* ===== Drawer ===== */
 .ov{
 position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);
 opacity:0;visibility:hidden;transition:.3s;z-index:30
@@ -212,7 +210,6 @@ display:inline-block;padding:2px 8px;border-radius:6px;
 background:rgba(255,179,0,.18);color:var(--acc);font-size:12px;font-weight:700
 }
 
-/* ===== Footer ===== */
 footer{
 position:relative;overflow:hidden;z-index:5;background:var(--hd);
 border-top:2px solid var(--acc);text-align:center;padding:0 18px 40px
@@ -271,7 +268,6 @@ color:var(--acc);font-size:20px;cursor:pointer;opacity:0;visibility:hidden;trans
 .fg a:hover,[dir=rtl] .fg a:hover{transform:none}
 }
 
-/* ===== PRO UPGRADE ===== */
 :root{--hf:"Orbitron","Segoe UI",Tahoma,sans-serif;--acc2:#ff4d00}
 html{scrollbar-color:var(--acc) var(--bg);scroll-behavior:smooth}
 html[lang=fa]{--hf:"Vazirmatn",Tahoma,sans-serif}
@@ -529,9 +525,10 @@ var $=function(i){return document.getElementById(i)},root=document.documentEleme
 
 function sv(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function ld(k){try{return localStorage.getItem(k)}catch(e){return null}}
+// escape user text before putting it in the page
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})}
 
-/* ===== IMAGE PATHS ===== */
+// image file names
 var IMG={
 logoHeader:"1662210054169c.jpg",
 logoFooter:"Call%20of%20duty.png",
@@ -548,7 +545,6 @@ grau:"Grau%205.56%20-%20Phantom%27s%20Core.png"
 
 function hide(i){i.style.visibility="hidden";var p=i.parentNode;if(p&&p.classList)p.classList.add("noimg")}
 
-/* ===== 1. UI HANDLERS ===== */
 var dr=$("dr");
 
 $("bg").onclick=function(e){
@@ -566,7 +562,6 @@ scrollTo(0,0)
 }
 });
 
-/* burger + overlay follow the drawer state */
 new MutationObserver(function(){
 var o=dr.classList.contains("open");
 $("bg").classList.toggle("open",o);
@@ -582,7 +577,6 @@ $("tp").classList.remove("on")
 }
 });
 
-/* footer links + back to top */
 document.querySelectorAll("[data-go]").forEach(function(a){
 a.onclick=function(e){
 e.preventDefault();
@@ -620,7 +614,7 @@ sv("codm_f",f)
 document.querySelectorAll(".mode").forEach(function(b){b.onclick=function(){setMode(b.dataset.m)}});
 document.querySelectorAll(".sw").forEach(function(b){b.onclick=function(){setFr(b.dataset.f)}});
 
-/* ===== 2. TRANSLATIONS ===== */
+// translations
 var T={
 
 en:{
@@ -768,7 +762,7 @@ fc:"انجمن‌ها"
 var cur="en";
 function tr(k){return (T[cur]&&T[cur][k])||T.en[k]||k}
 
-/* ===== 3. DATA ===== */
+// weapons: name, image key, type
 var W=[
 ["AK117","ak117","wt_ar"],
 ["AK-47","ak47","wt_ar"],
@@ -780,6 +774,7 @@ var W=[
 ["Grau 5.56","grau","wt_ar"]
 ];
 
+// players: name, rank, kd, weapon
 var P=[
 ["ShadowViper","I",2.9,"AK-47"],
 ["NovaStrike","I",2.7,"DL Q33"],
@@ -810,7 +805,6 @@ $("n").value="";
 toast(tr("ta"))
 };
 
-/* ===== 4. LOGOS + SLIDERS ===== */
 $("hl").src=IMG.logoHeader;
 $("hl").onerror=function(){hide(this)};
 $("fl").src=IMG.logoFooter;
@@ -856,7 +850,6 @@ sd=setInterval(function(){show(si+1)},3500)
 show(0);
 auto();
 
-/* ===== 5. LANGUAGE SWITCH ===== */
 var SH={en:"EN",ko:"KO",de:"DE",fa:"FA"};
 
 function setLang(l){
@@ -878,12 +871,10 @@ $("lp").classList.remove("on")
 }
 });
 
-/* ===== 6. START ===== */
 try{setMode(ld("codm_m")||"dark")}catch(e){}
 try{setFr(ld("codm_f")||"rainbow")}catch(e){}
 setLang(ld("codm_l")||"en");
 
-/* ===== PRO UPGRADE JS ===== */
 function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("on")},2200)}
 
 addEventListener("scroll",function(){document.querySelector("header").classList.toggle("sc",scrollY>20)});
@@ -904,7 +895,6 @@ var tx=0;
 $("sl").addEventListener("touchstart",function(e){tx=e.touches[0].clientX},{passive:true});
 $("sl").addEventListener("touchend",function(e){var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40){show(si+(d<0?1:-1));auto()}});
 
-/* embers background */
 (function(){
 if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
 var c=$("fx"),x=c.getContext("2d"),p=[],w,h;
