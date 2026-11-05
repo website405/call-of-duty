@@ -374,9 +374,6 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 .tdot{display:block;width:18px;height:18px;border-radius:50%;background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)}
 .mode{font-size:14px}
-.soon{display:grid;place-items:center;min-height:150px;padding:20px;text-align:center;border:2px dashed var(--bd);border-radius:16px;background:var(--panel);animation:sg 2.4s ease-in-out infinite}
-.soon b{font-family:var(--hf);font-size:clamp(20px,5vw,32px);letter-spacing:3px;text-transform:uppercase;background:linear-gradient(90deg,#ffb300,#ff4d00,#ffb300);background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 4s linear infinite}
-@keyframes sg{50%{border-color:var(--acc);box-shadow:0 0 26px rgba(255,150,0,.3)}}
 .news{display:flex;align-items:stretch;margin-top:6px;background:var(--hd);border-bottom:1px solid var(--bd);font-size:14px}
 .nl{flex:none;display:flex;align-items:center;padding:0 14px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#111;font-family:var(--hf);font-weight:900;font-size:12px;letter-spacing:2px}
 .nm{flex:1;overflow:hidden;direction:ltr;-webkit-mask:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
@@ -401,27 +398,16 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 .vr{inset-inline-start:14px}
 .vx:hover,.vr:hover{background:var(--acc);color:#111}
 
-/* ---- Skins section (password protected) ---- */
+/* ---- Skins section ---- */
 .skh{display:flex;align-items:center;gap:12px;margin:30px 0 12px;scroll-margin-top:90px}
 .skh h2{flex:1;margin:0}
-.lkb{display:none;flex:none;align-items:center;gap:6px;background:var(--panel);color:var(--acc);border:2px solid var(--acc);border-radius:12px;height:42px;padding:0 14px;font-family:var(--hf);font-weight:900;font-size:13px;cursor:pointer;box-shadow:0 0 16px rgba(255,150,0,.3);transition:.25s}
-.lkb.on{display:flex}
-.lkb:hover{background:var(--acc);color:#111}
-.lkb:active{transform:scale(.94)}
-#sgrid{display:none;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
+#sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
 .sk{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:14px;text-align:center;cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s}
 .sk:hover{transform:translateY(-5px);border-color:var(--acc);box-shadow:0 10px 26px rgba(255,140,0,.25)}
 .sk .im{aspect-ratio:2/3;width:100%;border-radius:14px;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle,rgba(255,179,0,.22),rgba(0,0,0,.45))}
 .sk .im img{width:100%;height:100%;object-fit:contain}
 .sk h3{margin:12px 0 2px;font-size:16px;color:var(--acc)}
 @media(max-width:620px){#sgrid{grid-template-columns:1fr}.sk{max-width:420px;margin:0 auto;width:100%}}
-.pw{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(4,6,4,.85);backdrop-filter:blur(5px);padding:20px}
-.pw.on{display:flex}
-.pwb{width:min(92vw,360px);background:var(--hd);border:2px solid var(--acc);border-radius:16px;padding:22px;text-align:center;box-shadow:0 0 30px rgba(255,150,0,.35)}
-.pwb h3{margin:0 0 6px;font-family:var(--hf)}
-.pwb input{width:100%;margin:12px 0 4px;text-align:center}
-.pwb .er{color:#ff4d4d;min-height:20px;font-size:14px;margin-bottom:8px}
-.pwb .row .btn{flex:1;padding:12px 10px}
 </style>
 </head>
 <body>
@@ -503,9 +489,7 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 
 <div class="skh" id="hsk">
 <h2 data-i="hk"></h2>
-<button class="lkb" id="lkb" aria-label="Lock">🔒 <span data-i="lk"></span></button>
 </div>
-<div class="soon" id="soon"><b data-i="cs"></b></div>
 <div id="sgrid"></div>
 </section>
 
@@ -580,18 +564,6 @@ border:1px solid var(--acc);border-radius:12px;padding:12px 22px;font-weight:700
 <div class="fine" data-i="ft"></div>
 </footer>
 
-<div class="pw" id="pw" aria-hidden="true">
-<div class="pwb">
-<h3 id="pwt"></h3>
-<input id="pwi" type="password" autocomplete="off">
-<div class="er" id="pwe"></div>
-<div class="row">
-<button class="btn" id="pwo" data-i="pwo"></button>
-<button class="btn ghost" id="pwc" data-i="pwc"></button>
-</div>
-</div>
-</div>
-
 <div class="vw" id="vw" aria-hidden="true">
 <button class="vx" id="vx" aria-label="Close">&#10005;</button>
 <button class="vr" id="vr" aria-label="Reset">&#8634;</button>
@@ -632,8 +604,6 @@ hur:"Hurricane%20-%20Shadow%20%26%20Shade%20%D9%88.png"
 // skin images (S1.png ... S10.png next to the other images)
 var S=[];
 for(var s=1;s<=10;s++)S.push("S"+s+".png");
-// skins password
-var PASS="ali1390qe",unl=false,pwMode="unlock";
 
 function news(){
 var h="";
@@ -675,8 +645,7 @@ document.addEventListener("keydown",function(e){
 if(e.key=="Escape"){
 dr.classList.remove("open");
 $("lp").classList.remove("on");
-$("tp").classList.remove("on");
-$("pw").classList.remove("on")
+$("tp").classList.remove("on")
 }
 });
 
@@ -752,10 +721,9 @@ wt_sn:"Sniper Rifle",
 r_myth:"Mythic",
 lvl:"Legendary",
 fd:"The ultimate fan hub for Call of Duty: Mobile legends.",
-b1:"Meet the Legends",b2:"Learn More",ta:"Player added!",hk:"Skins",cs:"Coming Soon",nl:"NEWS",n1:"Being a legend is not about your level, it is about the player.",n2:"New skins are coming soon.",n3:"Welcome to CODM Legends Hub.",fq:"Quick Links",
+b1:"Meet the Legends",b2:"Learn More",ta:"Player added!",hk:"Skins",nl:"NEWS",n1:"Being a legend is not about your level, it is about the player.",n2:"New skins are coming soon.",n3:"Welcome to CODM Legends Hub.",fq:"Quick Links",
 fc:"Community",
-hint:"Drag to spin 360° and tilt · double-tap to reset",
-pwt:"Enter password",pwt2:"Enter password to lock",pwp:"Password",pwo:"Unlock",pwo2:"Lock",pwc:"Cancel",pwx:"Wrong password",lk:"Lock"
+hint:"Drag to spin 360° and tilt · double-tap to reset"
 },
 
 ko:{
@@ -790,10 +758,9 @@ wt_sn:"저격소총",
 r_myth:"미식",
 lvl:"레전드",
 fd:"콜 오브 듀티 모바일 레전드를 위한 최고의 팬 허브.",
-b1:"레전드 보기",b2:"더 알아보기",ta:"플레이어가 추가되었습니다!",hk:"스킨",cs:"곧 출시",nl:"뉴스",n1:"레전드는 레벨이 아니라 플레이어에게 달려 있습니다.",n2:"새로운 스킨이 곧 출시됩니다.",n3:"CODM Legends Hub에 오신 것을 환영합니다.",fq:"바로가기",
+b1:"레전드 보기",b2:"더 알아보기",ta:"플레이어가 추가되었습니다!",hk:"스킨",nl:"뉴스",n1:"레전드는 레벨이 아니라 플레이어에게 달려 있습니다.",n2:"새로운 스킨이 곧 출시됩니다.",n3:"CODM Legends Hub에 오신 것을 환영합니다.",fq:"바로가기",
 fc:"커뮤니티",
-hint:"드래그하여 360° 회전 및 기울이기 · 두 번 탭하면 초기화",
-pwt:"비밀번호 입력",pwt2:"잠그려면 비밀번호 입력",pwp:"비밀번호",pwo:"열기",pwo2:"잠금",pwc:"취소",pwx:"비밀번호가 틀렸습니다",lk:"잠금"
+hint:"드래그하여 360° 회전 및 기울이기 · 두 번 탭하면 초기화"
 },
 
 de:{
@@ -828,10 +795,9 @@ wt_sn:"Scharfschützengewehr",
 r_myth:"Mythisch",
 lvl:"Legende",
 fd:"Der ultimative Fan-Hub für Call of Duty: Mobile Legenden.",
-b1:"Legenden ansehen",b2:"Mehr erfahren",ta:"Spieler hinzugefügt!",hk:"Skins",cs:"Demnächst",nl:"NEWS",n1:"Eine Legende zu sein hängt nicht vom Level ab, sondern vom Spieler.",n2:"Neue Skins erscheinen bald.",n3:"Willkommen im CODM Legends Hub.",fq:"Schnellzugriff",
+b1:"Legenden ansehen",b2:"Mehr erfahren",ta:"Spieler hinzugefügt!",hk:"Skins",nl:"NEWS",n1:"Eine Legende zu sein hängt nicht vom Level ab, sondern vom Spieler.",n2:"Neue Skins erscheinen bald.",n3:"Willkommen im CODM Legends Hub.",fq:"Schnellzugriff",
 fc:"Community",
-hint:"Ziehen zum Drehen um 360° und Kippen · Doppeltippen zum Zurücksetzen",
-pwt:"Passwort eingeben",pwt2:"Passwort zum Sperren eingeben",pwp:"Passwort",pwo:"Entsperren",pwo2:"Sperren",pwc:"Abbrechen",pwx:"Falsches Passwort",lk:"Sperren"
+hint:"Ziehen zum Drehen um 360° und Kippen · Doppeltippen zum Zurücksetzen"
 },
 
 fa:{
@@ -866,10 +832,9 @@ wt_sn:"تک‌تیرانداز",
 r_myth:"میتیک",
 lvl:"لجندری",
 fd:"بهترین مرکز هواداران لجندهای کالاف دیوتی موبایل.",
-b1:"دیدن لجندها",b2:"بیشتر بدانید",ta:"بازیکن اضافه شد!",hk:"اسکین‌ها",cs:"به زودی",nl:"اخبار",n1:"لجند بودن به لول نیست، به پلیر است.",n2:"اسکین‌های جدید به زودی می‌رسند.",n3:"به CODM Legends Hub خوش آمدید.",fq:"دسترسی سریع",
+b1:"دیدن لجندها",b2:"بیشتر بدانید",ta:"بازیکن اضافه شد!",hk:"اسکین‌ها",nl:"اخبار",n1:"لجند بودن به لول نیست، به پلیر است.",n2:"اسکین‌های جدید به زودی می‌رسند.",n3:"به CODM Legends Hub خوش آمدید.",fq:"دسترسی سریع",
 fc:"انجمن‌ها",
-hint:"برای چرخش ۳۶۰ درجه و کج‌کردن بکش · دو بار بزن تا به حالت اول برگردد",
-pwt:"رمز را وارد کنید",pwt2:"برای قفل کردن رمز را وارد کنید",pwp:"رمز عبور",pwo:"باز کردن",pwo2:"قفل کردن",pwc:"انصراف",pwx:"رمز اشتباه است",lk:"قفل"
+hint:"برای چرخش ۳۶۰ درجه و کج‌کردن بکش · دو بار بزن تا به حالت اول برگردد"
 }
 
 };
@@ -978,9 +943,6 @@ function setLang(l){
 cur=T[l]?l:"en";
 document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=tr(e.dataset.i)});
 $("n").placeholder=tr("pn");
-$("pwi").placeholder=tr("pwp");
-$("pwt").textContent=tr(pwMode=="lock"?"pwt2":"pwt");
-$("pwo").textContent=tr(pwMode=="lock"?"pwo2":"pwo");
 root.lang=cur;
 root.dir=cur=="fa"?"rtl":"ltr";
 $("lcur").textContent=SH[cur];
@@ -1149,7 +1111,7 @@ if(c)openV(+c.dataset.w)
 };
 $("sl").onclick=function(){openV(si)};
 
-// ---- Skins: hamburger button + password prompt + lock button ----
+// ---- Skins (always visible, no password) ----
 function skinsRender(){
 $("sgrid").innerHTML=S.map(function(f,i){
 return '<div class="sk" data-k="'+i+'"><div class="im"><img src="'+f+'" alt="Skin '+(i+1)+'" loading="lazy" onerror="hide(this)"></div><h3>SKIN '+(i+1)+'</h3></div>'
@@ -1163,54 +1125,8 @@ function goSkins(){
 showView("home");
 setTimeout(function(){$("hsk").scrollIntoView({behavior:"smooth",block:"start"})},300)
 }
-function pwOpen(mode){
-pwMode=mode||"unlock";
-if(pwMode=="unlock"&&unl){goSkins();return}
-$("pwt").textContent=tr(pwMode=="lock"?"pwt2":"pwt");
-$("pwo").textContent=tr(pwMode=="lock"?"pwo2":"pwo");
-$("pwi").value="";
-$("pwe").textContent="";
-$("pw").classList.add("on");
-$("pw").setAttribute("aria-hidden","false");
-setTimeout(function(){$("pwi").focus()},60)
-}
-function pwClose(){
-$("pw").classList.remove("on");
-$("pw").setAttribute("aria-hidden","true")
-}
-function skinsUnlock(){
-unl=true;
-$("soon").style.display="none";
+$("skb").onclick=function(e){e.stopPropagation();dr.classList.remove("open");goSkins()};
 skinsRender();
-$("sgrid").style.display="grid";
-$("lkb").classList.add("on");
-goSkins()
-}
-function skinsLock(){
-unl=false;
-$("sgrid").style.display="none";
-$("sgrid").innerHTML="";
-$("soon").style.display="grid";
-$("lkb").classList.remove("on")
-}
-function pwCheck(){
-if($("pwi").value===PASS){
-pwClose();
-if(pwMode=="lock")skinsLock();
-else skinsUnlock()
-}else{
-$("pwe").textContent=tr("pwx");
-$("pwi").value="";
-$("pwi").focus()
-}
-}
-$("skb").onclick=function(e){e.stopPropagation();dr.classList.remove("open");pwOpen("unlock")};
-$("lkb").onclick=function(e){e.stopPropagation();pwOpen("lock")};
-$("pwo").onclick=function(e){e.stopPropagation();pwCheck()};
-$("pwc").onclick=function(e){e.stopPropagation();pwClose()};
-$("pwi").onkeydown=function(e){if(e.key=="Enter")pwCheck()};
-$("pwi").onclick=function(e){e.stopPropagation()};
-$("pw").onclick=function(e){e.stopPropagation();if(e.target===this)pwClose()};
 </script>
 
 </body>
