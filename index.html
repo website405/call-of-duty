@@ -429,6 +429,11 @@ background:linear-gradient(135deg,var(--acc),var(--acc2));box-shadow:0 0 18px rg
 .rs .gs em{font-style:normal;padding:5px 12px;border-radius:99px;border:1px solid var(--acc);background:rgba(255,179,0,.12);
 color:var(--acc);font-weight:700;font-size:14px}
 .rs .gt{color:var(--mut);font-size:15px;margin-bottom:8px}
+#rform{margin-bottom:20px}
+#rform h3{margin:0 0 10px;font-size:17px;color:var(--acc)}
+#rform input{width:100%;margin:6px 0}
+#rform .btn{margin-top:8px}
+#rnote{color:var(--mut);font-size:13px;margin-top:10px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -551,6 +556,14 @@ color:var(--acc);font-weight:700;font-size:14px}
 
 <section class="view" id="resume">
 <h2 data-i="hr"></h2>
+<div class="box" id="rform">
+<h3 data-i="ra"></h3>
+<input id="rn" maxlength="30">
+<input id="rlv" type="number" min="1" max="9999">
+<input id="rgn" maxlength="80">
+<button class="btn" id="radd" data-i="rsub"></button>
+<div id="rnote"></div>
+</div>
 <div id="rlist"></div>
 </section>
 
@@ -757,6 +770,7 @@ rl:"Level",
 rk:"Game Rank",
 rg:"Guns",
 rlp:"Legendary Player",
+ra:"Add your resume",rpn:"Your name",rpl:"Level (e.g. 273)",rpg:"Guns (comma separated, e.g. BAL-27 Mythic, HS Mythic)",rsub:"Add Resume",rok:"Resume added!",rbad:"Please enter a name and a level.",rloc:"Shared database is not connected yet, so this resume is visible only on this device.",
 hint:"Drag to spin 360° and tilt · double-tap to reset"
 },
 
@@ -800,6 +814,7 @@ rl:"레벨",
 rk:"게임 랭크",
 rg:"무기",
 rlp:"레전드 플레이어",
+ra:"이력서 추가",rpn:"이름",rpl:"레벨 (예: 273)",rpg:"무기 (쉼표로 구분, 예: BAL-27 미식, HS 미식)",rsub:"이력서 추가",rok:"이력서가 추가되었습니다!",rbad:"이름과 레벨을 입력하세요.",rloc:"공유 데이터베이스가 연결되지 않아 이 기기에서만 보입니다.",
 hint:"드래그하여 360° 회전 및 기울이기 · 두 번 탭하면 초기화"
 },
 
@@ -843,6 +858,7 @@ rl:"Level",
 rk:"Spielrang",
 rg:"Waffen",
 rlp:"Legendärer Spieler",
+ra:"Lebenslauf hinzufügen",rpn:"Dein Name",rpl:"Level (z. B. 273)",rpg:"Waffen (durch Komma getrennt, z. B. BAL-27 Mythisch, HS Mythisch)",rsub:"Lebenslauf hinzufügen",rok:"Lebenslauf hinzugefügt!",rbad:"Bitte Name und Level eingeben.",rloc:"Die gemeinsame Datenbank ist noch nicht verbunden, daher nur auf diesem Gerät sichtbar.",
 hint:"Ziehen zum Drehen um 360° und Kippen · Doppeltippen zum Zurücksetzen"
 },
 
@@ -886,6 +902,7 @@ rl:"لول",
 rk:"لول بازی",
 rg:"گان‌ها",
 rlp:"لجند پلیر",
+ra:"افزودن رزومه",rpn:"نام شما",rpl:"لول (مثلاً ۲۷۳)",rpg:"گان‌ها (با کاما جدا کن، مثلاً BAL-27 میتیک، HS میتیک)",rsub:"افزودن رزومه",rok:"رزومه اضافه شد!",rbad:"نام و لول را وارد کن.",rloc:"دیتابیس مشترک هنوز وصل نشده، پس این رزومه فقط روی همین دستگاه دیده می‌شود.",
 hint:"برای چرخش ۳۶۰ درجه و کج‌کردن بکش · دو بار بزن تا به حالت اول برگردد"
 }
 
@@ -934,18 +951,51 @@ guns:[["BAL-27","r_myth"],["HS","r_myth"]]
 ];
 
 function resumeRender(){
-$("rlist").innerHTML=R.map(function(p,i){
+$("rlist").innerHTML=R.concat(RA).map(function(p,i){
 var nm=p.n[cur]||p.n.en;
-var gs=p.guns.map(function(g){return "<em>"+esc(g[0])+" · "+tr(g[1])+"</em>"}).join("");
+var gs=p.guns.map(function(g){return "<em>"+esc(g[0])+(g[1]?" · "+tr(g[1]):"")+"</em>"}).join("");
 return '<div class="rs" style="--d:'+(i*90)+'ms">'
 +'<div class="rh"><div class="av">'+esc(p.n.en.charAt(0))+'</div><div><h3>'+esc(nm)+'</h3><div class="rn">#'+(i+1)+'</div></div></div>'
 +'<div class="ln"><span>'+tr("rl")+'</span><b>'+esc(p.lv)+'</b></div>'
-+'<div class="ln"><span>'+tr("rk")+'</span><b>'+tr(p.rank)+'</b></div>'
++(p.rank?'<div class="ln"><span>'+tr("rk")+'</span><b>'+tr(p.rank)+'</b></div>':'')
 +'<div class="gt">'+tr("rg")+'</div>'
 +'<div class="gs">'+gs+'</div>'
 +'</div>'
 }).join("")
 }
+
+// ---- shared resumes (Firebase Realtime Database, plain REST) ----
+// Paste your database URL here, e.g. "https://my-project-default-rtdb.firebaseio.com"
+var DB="";
+var RA=[];
+function rClean(x){
+if(!x||typeof x.n!="string"||!x.n.trim())return null;
+var g=Array.isArray(x.g)?x.g.slice(0,6).map(function(v){return String(v).slice(0,40)}):[];
+return{n:{en:x.n.slice(0,30)},lv:Math.max(1,Math.min(9999,parseInt(x.lv)||1)),rank:null,guns:g.map(function(v){return[v,null]}),t:+x.t||0}
+}
+function rGet(){
+if(!DB)return;
+fetch(DB+"/resumes.json").then(function(r){return r.json()}).then(function(d){
+var a=[];
+Object.keys(d||{}).forEach(function(k){var c=rClean(d[k]);if(c)a.push(c)});
+a.sort(function(x,y){return x.t-y.t});
+RA=a;resumeRender()
+}).catch(function(e){console.error(e)})
+}
+$("radd").onclick=function(){
+var n=$("rn").value.trim(),lv=parseInt($("rlv").value);
+if(!n||!lv){toast(tr("rbad"));return}
+var g=$("rgn").value.split(/[,،]/).map(function(v){return v.trim()}).filter(Boolean).slice(0,6);
+var e={n:n.slice(0,30),lv:Math.min(9999,lv),g:g,t:Date.now()};
+function done(){$("rn").value="";$("rlv").value="";$("rgn").value="";toast(tr("rok"))}
+if(DB){
+fetch(DB+"/resumes.json",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(e)})
+.then(function(){done();rGet()}).catch(function(){toast("Error")})
+}else{
+RA.push(rClean(e));resumeRender();done()
+}
+};
+rGet();setInterval(rGet,30000);
 
 function render(){
 $("wg").innerHTML=W.map(function(w,i){
@@ -1020,6 +1070,8 @@ function setLang(l){
 cur=T[l]?l:"en";
 document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=tr(e.dataset.i)});
 $("n").placeholder=tr("pn");
+$("rn").placeholder=tr("rpn");$("rlv").placeholder=tr("rpl");$("rgn").placeholder=tr("rpg");
+$("rnote").textContent=DB?"":tr("rloc");
 root.lang=cur;
 root.dir=cur=="fa"?"rtl":"ltr";
 $("lcur").textContent=SH[cur];
